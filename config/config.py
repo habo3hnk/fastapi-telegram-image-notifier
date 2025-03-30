@@ -14,3 +14,6 @@ DATABASE_URL = str(os.getenv("DATABASE_URL"))
 
 if IMAGE_FOLDER:
     os.makedirs(IMAGE_FOLDER, exist_ok=True)
+
+
+# test
