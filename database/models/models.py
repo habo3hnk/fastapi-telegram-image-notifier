@@ -1,11 +1,8 @@
 from datetime import datetime, timezone
 from typing import List, Optional
 from sqlalchemy import ForeignKey, String
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
-
-
-class Base(DeclarativeBase):
-    pass
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from database.base import Base
 
 
 class User(Base):
