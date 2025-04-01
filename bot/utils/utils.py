@@ -3,9 +3,9 @@ import asyncio
 from datetime import datetime
 from aiogram.types import Message, PhotoSize
 from aiogram import Bot
-from config import IMAGE_FOLDER, SERVER_URL, IMG_MAX_SIZE_MB
-from static.static_text import errors
 from aiogram.exceptions import TelegramBadRequest
+from config.config import IMAGE_FOLDER, SERVER_URL, IMG_MAX_SIZE_MB
+from bot.static.static_text import errors
 
 
 async def save_img(bot: Bot, photo: PhotoSize) -> tuple[bool, str]:

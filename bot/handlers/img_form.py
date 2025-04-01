@@ -3,11 +3,12 @@ from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
 from aiogram.filters import StateFilter
-from keyboards.main_menu import get_chanel_keyboard, get_main_keyboard
-from keyboards.callback_data import CallbackData
-from states.states import ImgForm
-from static.static_text import main_menu, img_form, errors
-from utils.utils import delete_message, delete_message_by_id, save_img
+from sqlalchemy.ext.asyncio import AsyncSession
+from bot.keyboards.main_menu import get_chanel_keyboard, get_main_keyboard
+from bot.keyboards.callback_data import CallbackData
+from bot.states.states import ImgForm
+from bot.static.static_text import main_menu, img_form, errors
+from bot.utils.utils import delete_message, delete_message_by_id, save_img
 from aiogram import Bot
 
 
@@ -27,7 +28,9 @@ async def upload_image(callback: CallbackQuery, state: FSMContext):
 
 
 @img_router.message(StateFilter(ImgForm.waiting_for_image), F.photo)
-async def process_title(message: Message, state: FSMContext, bot: Bot):
+async def process_title(
+    message: Message, state: FSMContext, bot: Bot, session: AsyncSession
+):
     data = await state.get_data()
     photo = message.photo
 

@@ -1,6 +1,6 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from .callback_data import CallbackData
-from static.static_text import buttons
+from bot.static.static_text import buttons
 
 
 def get_main_keyboard():
