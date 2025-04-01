@@ -8,8 +8,8 @@ from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
 
 from config.config import TOKEN
-from handlers import router
-from middlewares.db import DbSessionMiddleware
+from bot.handlers import router
+from bot.middlewares.db import DbSessionMiddleware
 
 
 def setup_logging():
