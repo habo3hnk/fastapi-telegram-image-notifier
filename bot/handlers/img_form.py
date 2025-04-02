@@ -1,6 +1,6 @@
 import asyncio
 from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, user
 from aiogram.fsm.context import FSMContext
 from aiogram.filters import StateFilter
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -16,7 +16,7 @@ img_router = Router()
 
 
 @img_router.callback_query(F.data == CallbackData.CREATE_IMAGE.value)
-async def upload_image(callback: CallbackQuery, state: FSMContext):
+async def image_creation_start(callback: CallbackQuery, state: FSMContext):
     keyboard = get_chanel_keyboard()
     await state.set_state(ImgForm.waiting_for_image)
 
@@ -28,9 +28,12 @@ async def upload_image(callback: CallbackQuery, state: FSMContext):
 
 
 @img_router.message(StateFilter(ImgForm.waiting_for_image), F.photo)
-async def process_title(
+async def image_upload(
     message: Message, state: FSMContext, bot: Bot, session: AsyncSession
 ):
+    if not message.from_user:
+        return
+
     data = await state.get_data()
     photo = message.photo
 
@@ -40,7 +43,19 @@ async def process_title(
         asyncio.create_task(delete_message(message=warning_message, delay=10))
         return
 
-    success, result_msg = await save_img(bot, photo[-1])
+    telegram_id = message.from_user.id
+    display_name = ""
+
+    if message.caption:
+        display_name = message.caption
+
+    success, result_msg = await save_img(
+        bot=bot,
+        session=session,
+        telegram_id=telegram_id,
+        display_name=display_name,
+        photo=photo[-1],
+    )
 
     if success:
         await message.answer(result_msg)
