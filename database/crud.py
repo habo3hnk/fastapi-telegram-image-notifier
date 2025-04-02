@@ -24,7 +24,6 @@ async def get_user_by_telegram_id(
 async def get_user_with_images(
     session: AsyncSession, telegram_id: int
 ) -> Optional[User]:
-    """Получить пользователя вместе с его изображениями."""
     stmt = (
         select(User)
         .where(User.telegram_id == telegram_id)
@@ -41,7 +40,6 @@ async def delete_user(session: AsyncSession, telegram_id: int) -> bool:
     return result.rowcount > 0
 
 
-# ============== Image CRUD ==============
 async def create_image(
     session: AsyncSession,
     user_id: int,
@@ -56,7 +54,6 @@ async def create_image(
 
 
 async def get_image_by_id(session: AsyncSession, image_id: int) -> Optional[Image]:
-    """Получить изображение по ID."""
     stmt = select(Image).where(Image.id == image_id)
     result = await session.execute(stmt)
     return result.scalar_one_or_none()
@@ -73,7 +70,6 @@ async def update_image_display_name(
     image_id: int,
     new_display_name: str,
 ) -> bool:
-    """Обновить display_name изображения."""
     stmt = (
         update(Image).where(Image.id == image_id).values(display_name=new_display_name)
     )
@@ -83,20 +79,17 @@ async def update_image_display_name(
 
 
 async def delete_image(session: AsyncSession, image_id: int) -> bool:
-    """Удалить изображение по ID."""
     stmt = delete(Image).where(Image.id == image_id)
     result = await session.execute(stmt)
     await session.commit()
     return result.rowcount > 0
 
 
-# ============== ImageView CRUD ==============
 async def create_image_view(
     session: AsyncSession,
     image_id: int,
     ip_address: str,
 ) -> ImageView:
-    """Добавить запись о просмотре изображения."""
     view = ImageView(image_id=image_id, ip_address=ip_address)
     session.add(view)
     await session.commit()
@@ -107,21 +100,18 @@ async def create_image_view(
 async def get_views_for_image(
     session: AsyncSession, image_id: int
 ) -> Sequence[ImageView]:
-    """Получить все просмотры изображения."""
     stmt = select(ImageView).where(ImageView.image_id == image_id)
     result = await session.execute(stmt)
     return result.scalars().all()
 
 
 async def get_total_views_count(session: AsyncSession, image_id: int) -> int:
-    """Получить общее количество просмотров изображения."""
     stmt = select(ImageView).where(ImageView.image_id == image_id)
     result = await session.execute(stmt)
     return len(result.scalars().all())
 
 
 async def delete_image_view(session: AsyncSession, view_id: int) -> bool:
-    """Удалить запись о просмотре по ID."""
     stmt = delete(ImageView).where(ImageView.id == view_id)
     result = await session.execute(stmt)
     await session.commit()
