@@ -4,6 +4,7 @@ import uvicorn
 
 from fastapi import FastAPI
 from api.routers import images
+from config.config import HOST, PORT
 
 
 app = FastAPI()
@@ -17,4 +18,4 @@ logging.basicConfig(
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host=HOST, port=PORT)
