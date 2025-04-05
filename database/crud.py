@@ -59,6 +59,12 @@ async def get_image_by_id(session: AsyncSession, image_id: int) -> Optional[Imag
     return result.scalar_one_or_none()
 
 
+async def get_image_by_name(session: AsyncSession, image_name: str) -> Optional[Image]:
+    stmt = select(Image).where(Image.file_name == image_name)
+    result = await session.execute(stmt)
+    return result.scalar_one_or_none()
+
+
 async def get_images_by_user(session: AsyncSession, user_id: int) -> Sequence[Image]:
     stmt = select(Image).where(Image.user_id == user_id)
     result = await session.execute(stmt)
