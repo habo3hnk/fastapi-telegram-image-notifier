@@ -35,8 +35,6 @@ async def command_start_handler(
 
 @main_router.callback_query(F.data == CallbackData.GET_IMG_LIST.value)
 async def handle_get_img_list_btn(callback: CallbackQuery, session: AsyncSession):
-    # TODO: Тут надо будет добавить клавиатуру с выбором конкретного изображения
-    # и хендлер этот переместить в другое место
 
     telegram_id = callback.from_user.id
     user = await get_user_by_telegram_id(session=session, telegram_id=telegram_id)
