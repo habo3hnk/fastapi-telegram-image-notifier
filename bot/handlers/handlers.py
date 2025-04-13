@@ -43,7 +43,3 @@ async def handle_get_img_list_btn(callback: CallbackQuery, session: AsyncSession
 
     for i in imgs:
         await callback.message.answer(text=i.file_name)
-
-
-# NOTE: Надо будет сделать рефакторинг структуры handlers. Мб сделаю
-# Отдельный модуль для обработки комманд.
