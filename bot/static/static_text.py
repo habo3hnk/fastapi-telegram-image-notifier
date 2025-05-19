@@ -22,3 +22,8 @@ errors = {
     "img_max_size": "⚠️ <i>The image exceeds the maximum allowed size ({size}). Please send a smaller file.</i>",
     "default": "⚠️ <i>An error occurred while processing the image. Please try again.</i>",
 }
+
+notifications = {
+    "vivied_notification": "🖼 <b>New View Alert</b> 🖼 \n\n"
+    + "👀 <i>Someone just saw your picture <b>{image_name}</b></i> \n"
+}
