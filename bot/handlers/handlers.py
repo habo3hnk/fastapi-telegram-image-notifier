@@ -1,6 +1,6 @@
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, message
 from aiogram.filters import CommandStart
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -35,11 +35,11 @@ async def command_start_handler(
 
 @main_router.callback_query(F.data == CallbackData.GET_IMG_LIST.value)
 async def handle_get_img_list_btn(callback: CallbackQuery, session: AsyncSession):
-
     telegram_id = callback.from_user.id
     user = await get_user_by_telegram_id(session=session, telegram_id=telegram_id)
 
     imgs = await get_images_by_user(session=session, user_id=user.id)
+    await callback.answer()
 
     for i in imgs:
         await callback.message.answer(text=i.file_name)

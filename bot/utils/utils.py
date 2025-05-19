@@ -9,6 +9,15 @@ from config.config import IMAGE_FOLDER, SERVER_URL, IMG_MAX_SIZE_MB
 from bot.static.static_text import errors
 from database.crud import create_image, get_user_by_telegram_id
 
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
+from config.config import TOKEN
+
+
+def get_bot() -> Bot:
+    bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    return bot
+
 
 async def save_img(
     bot: Bot,

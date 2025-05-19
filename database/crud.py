@@ -71,6 +71,12 @@ async def get_images_by_user(session: AsyncSession, user_id: int) -> Sequence[Im
     return result.scalars().all()
 
 
+async def get_user_by_image(session: AsyncSession, image: Image) -> Optional[Image]:
+    stmt = select(User).where(Image.id == image.id)
+    result = await session.execute(stmt)
+    return result.scalar_one_or_none()
+
+
 async def update_image_display_name(
     session: AsyncSession,
     image_id: int,

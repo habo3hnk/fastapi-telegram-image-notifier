@@ -5,7 +5,7 @@ load_dotenv()
 
 
 HOST = str(os.getenv("HOST", "127.0.0.1"))
-HOST = int(os.getenv("PORT", 8000))
+PORT = int(os.getenv("PORT", 8000))
 
 TOKEN = str(os.getenv("BOT_TOKEN"))
 IMAGE_FOLDER = str(os.getenv("IMAGE_FOLDER"))
